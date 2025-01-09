@@ -15,24 +15,29 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class undo_Stack_Queue {
+   
+public class undo_Stack_Queue {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Stack<String> stack = new Stack<>();
-        StringBuilder res = new StringBuilder();
-        System.out.println("Enter exit to stop: ");
+        String currentText = "";
 
-        while (true) {
-            String word = sc.nextLine();
-            if (word.equals("exit"))
-                break;
-            if (word.equals("Undo") && !stack.isEmpty()) {
-                String lastword = stack.pop();
-               res.delete(res.lastIndexOf(lastword), res.length());
-            } else {
-                stack.push(word);
-                res.append(word).append(" ");
+        String[] actions = {"Type Hello", "Type World", "Undo", "Type Java"};
+
+        for (String action : actions) {
+            if (action.startsWith("Type")) {
+                String word = action.substring(5);
+                stack.push(currentText);
+                currentText += (currentText.isEmpty() ? "" : " ") + word;
+            } else if (action.equals("Undo")) {
+                if (!stack.isEmpty()) {
+                    currentText = stack.pop();
+                } else {
+                    System.out.println("No actions to undo.");
+                }
             }
         }
-        System.out.println(res.toString());
+        System.out.println("Current Text: " + currentText);
     }
 }
+
