@@ -29,14 +29,19 @@ public class Generics_Box<T> {
         System.out.println(item);
     }
 
-    public boolean isTypeOf(Object item) {
-        return item instanceof String;
+    public boolean isTypeOf(Class<?> type) {
+        return type.isInstance(item);
     }
 
     public static void main(String[] args) {
         Generics_Box<String> stringBox = new Generics_Box<>();
         stringBox.setItem("Hello");
-        System.out.println("Is the item of type String? " + stringBox.isTypeOf(stringBox.getItem()));
-        System.out.println("Is the item of type Integer? " + stringBox.isTypeOf(new Integer(42)));
+        System.out.println("Is the item of type String? " + stringBox.isTypeOf(String.class));
+        System.out.println("Is the item of type Integer? " + stringBox.isTypeOf(Integer.class));
+
+        Generics_Box<Integer> integerBox = new Generics_Box<>();
+        integerBox.setItem(42);
+        System.out.println("Is the item of type Integer? " + integerBox.isTypeOf(Integer.class));
+        System.out.println("Is the item of type String? " + integerBox.isTypeOf(String.class));
     }
 }
