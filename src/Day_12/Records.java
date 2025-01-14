@@ -1,11 +1,7 @@
 //Create 3 students mark statement records using jdbc.
 
 package Day_12;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class Records {
     public static void main(String[] args) {
@@ -14,16 +10,24 @@ public class Records {
         String username = "root";
         String password = "";
 
-        String selectSQL = "SELECT student_id, student_name, subject, marks_obtained, total_marks FROM marks_statement";
+        String insertSQL1 = "INSERT INTO marks_statement (student_id, student_name, subject, marks_obtained, total_marks) VALUES (100, 'John Doe', 'Mathematics', 85, 100)";
+        String insertSQL2 = "INSERT INTO marks_statement (student_id, student_name, subject, marks_obtained, total_marks) VALUES (101, 'Jane Smith', 'Science', 92, 100)";
+        String insertSQL3 = "INSERT INTO marks_statement (student_id, student_name, subject, marks_obtained, total_marks) VALUES (102, 'Emily Davis', 'History', 78, 100)";
 
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
+        Statement statement = null;
+         ResultSet resultSet = null;
         try {
+
             connection = DriverManager.getConnection(url, username, password);
-            preparedStatement = connection.prepareStatement(selectSQL);
-            resultSet = preparedStatement.executeQuery();
+            statement = connection.createStatement();
+            statement.executeUpdate(insertSQL1);
+            statement.executeUpdate(insertSQL2);
+            statement.executeUpdate(insertSQL3);
+            System.out.println("Student records inserted successfully.");
+
+            String selectSQL = "SELECT student_id, student_name, subject, marks_obtained, total_marks FROM marks_statement";
+           resultSet = statement.executeQuery(selectSQL);
 
             System.out.println("Student Records:");
             System.out.println("-------------------------------------------------");
@@ -44,8 +48,7 @@ public class Records {
             e.printStackTrace();
         } finally {
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
+                if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
