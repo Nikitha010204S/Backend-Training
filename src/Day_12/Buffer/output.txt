@@ -1,0 +1,5 @@
+Hello, this is the first line.
+Welcome to the file reading and writing example.
+This is the third line.
+BufferedReader and BufferedWriter are very useful classes in Java.
+End of the file.
