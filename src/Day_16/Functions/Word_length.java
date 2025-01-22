@@ -12,11 +12,10 @@ public class Word_length {
         String[] words={"Hello", "World", "Java"};
         String[] res;
        Function<String,Integer> length=word->word.length();
-
-        String output = Arrays.stream(words)
-                .map(length)
-                .map(String::valueOf)
-                .collect(Collectors.joining(", ", "[", "]"));
-        System.out.println(output);
+        Integer[] res1 = new Integer[words.length];
+        for (int i = 0; i < words.length; i++) {
+            res1[i] = length.apply(words[i]);
+        }
+        System.out.println(Arrays.toString(res1));
     }
 }
